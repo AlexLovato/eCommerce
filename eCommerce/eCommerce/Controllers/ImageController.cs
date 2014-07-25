@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using eCommerce.Models;
+using System.IO; //add system.io to let us save or get files
 
 namespace eCommerce.Controllers
 {
@@ -46,11 +47,20 @@ namespace eCommerce.Controllers
 
         //
         // POST: /Image/Create
-
+        //add the HTTPPostedFileBase parameter to our post action
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Image image)
+        public ActionResult Create(Image image, HttpPostedFileBase upload)
         {
+            //handle the file upload
+            //step 1: Get the filename
+            string filename = upload.FileName;
+            //step 2: get the file path to save the upload to
+            string path = Path.Combine(Server.MapPath("~/Content/Images"), filename);
+            //step 3: save our uploaded file
+            upload.SaveAs(path);
+            //step 4: update the image URL for our database object
+            image.ImageURL= ("/Content/Images/" + filename);
             if (ModelState.IsValid)
             {
                 db.Images.Add(image);

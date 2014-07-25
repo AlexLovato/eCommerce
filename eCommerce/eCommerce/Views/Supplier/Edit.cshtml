@@ -1,32 +1,26 @@
-﻿@model eCommerce.Models.Image
+﻿@model eCommerce.Models.Supplier
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
-@using (Html.BeginForm("Create", "Image", FormMethod.Post, new {enctype="multipart/form-data"}))
-{
+@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>Image</legend>
+        <legend>Supplier</legend>
+
+        @Html.HiddenFor(model => model.SupplierID)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.ProductID, "Product")
+            @Html.LabelFor(model => model.Name)
         </div>
         <div class="editor-field">
-            @Html.DropDownList("ProductID", String.Empty)
-            @Html.ValidationMessageFor(model => model.ProductID)
-        </div>
-
-        <div class="editor-label">
-            Upload an image
-        </div>
-        <div class="editor-field">
-            <input type="file" id="upload" name="upload" />
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
         </div>
 
         <div class="editor-label">
@@ -38,7 +32,7 @@
         </div>
 
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Save" />
         </p>
     </fieldset>
 }

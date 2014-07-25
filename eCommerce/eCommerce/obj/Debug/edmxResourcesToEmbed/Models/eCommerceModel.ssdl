@@ -5,8 +5,8 @@
       <PropertyRef Name="CategoryID" />
     </Key>
     <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="ParentID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ParentID" Type="int" />
   </EntityType>
   <EntityType Name="Images">
     <Key>
@@ -14,8 +14,8 @@
     </Key>
     <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ProductID" Type="int" Nullable="false" />
-    <Property Name="ImageURL" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Description" Type="nvarchar" MaxLength="50" />
+    <Property Name="ImageURL" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -36,10 +36,10 @@
     </Key>
     <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Body" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="Body" Type="text" Nullable="false" />
     <Property Name="Rating" Type="int" Nullable="false" />
-    <Property Name="DateCreated" Type="date" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
     <Property Name="ProductID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Suppliers">
@@ -47,11 +47,11 @@
       <PropertyRef Name="SupplierID" />
     </Key>
     <Property Name="SupplierID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="Description" Type="nchar" MaxLength="10" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="text" Nullable="false" />
   </EntityType>
   <Association Name="FK_Categories_Categories">
-    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
     <End Role="Categories1" Type="Self.Categories" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Categories">
@@ -62,8 +62,10 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Images_Products">
-    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+  <Association Name="FK_Images_Products1">
+    <End Role="Products" Type="Self.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Images" Type="Self.Images" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
@@ -75,7 +77,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Products_Categories">
-    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Products" Type="Self.Products" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Categories">
@@ -87,7 +91,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Products_Suppliers">
-    <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+    <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Products" Type="Self.Products" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Suppliers">
@@ -99,7 +105,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Reviews_Products">
-    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Products" Type="Self.Products" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
@@ -120,7 +128,7 @@
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Categories1" EntitySet="Categories" />
     </AssociationSet>
-    <AssociationSet Name="FK_Images_Products" Association="Self.FK_Images_Products">
+    <AssociationSet Name="FK_Images_Products1" Association="Self.FK_Images_Products1">
       <End Role="Products" EntitySet="Products" />
       <End Role="Images" EntitySet="Images" />
     </AssociationSet>

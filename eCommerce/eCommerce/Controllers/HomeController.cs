@@ -7,24 +7,24 @@ using System.Web.Mvc;
 namespace eCommerce.Controllers
 {
     public class HomeController : Controller
-    {
+    { Models.eCommerceEntities db = new Models.eCommerceEntities();
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            return View();
+            ViewBag.Message = "You can buy things from me. You will buy things from me.";
+           //display all products to the view
+            return View(db.Products);
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your app description page.";
+            ViewBag.Message = "we sell electronics.";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "contact us here";
 
             return View();
         }

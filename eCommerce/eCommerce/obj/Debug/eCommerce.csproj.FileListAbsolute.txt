@@ -81,6 +81,6 @@ C:\Users\dt\Documents\GitHub\eCommerce\eCommerce\eCommerce\bin\ko\System.Spatial
 C:\Users\dt\Documents\GitHub\eCommerce\eCommerce\eCommerce\bin\ru\System.Spatial.resources.dll
 C:\Users\dt\Documents\GitHub\eCommerce\eCommerce\eCommerce\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\dt\Documents\GitHub\eCommerce\eCommerce\eCommerce\bin\zh-Hant\System.Spatial.resources.dll
-C:\Users\dt\Documents\GitHub\eCommerce\eCommerce\eCommerce\obj\Debug\eCommerce.csprojResolveAssemblyReference.cache
 C:\Users\dt\Documents\GitHub\eCommerce\eCommerce\eCommerce\obj\Debug\eCommerce.dll
 C:\Users\dt\Documents\GitHub\eCommerce\eCommerce\eCommerce\obj\Debug\eCommerce.pdb
+C:\Users\dt\Documents\GitHub\eCommerce\eCommerce\eCommerce\obj\Debug\eCommerce.csprojResolveAssemblyReference.cache

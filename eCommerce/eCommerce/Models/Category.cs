@@ -16,15 +16,15 @@ namespace eCommerce.Models
     {
         public Category()
         {
-            this.Subcategories = new HashSet<Category>();
+            this.SubCategory = new HashSet<Category>();
             this.Products = new HashSet<Product>();
         }
     
         public int CategoryID { get; set; }
         public string Name { get; set; }
-        public int ParentID { get; set; }
+        public Nullable<int> ParentID { get; set; }
     
-        public virtual ICollection<Category> Subcategories { get; set; }
+        public virtual ICollection<Category> SubCategory { get; set; }
         public virtual Category ParentCategory { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }

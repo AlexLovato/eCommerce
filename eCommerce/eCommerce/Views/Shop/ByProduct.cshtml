@@ -1,0 +1,82 @@
+﻿@model eCommerce.Models.Product
+
+@{
+    ViewBag.Title = "ByProduct";
+}
+
+<h2>@Html.DisplayFor(model => model.Name)</h2>
+
+<fieldset style="display:inline-block">
+    <legend>Product</legend>
+    @*<div style="float:right"><img src="@Model.Images.Last().ImageURL" /></div>*@
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.UnitPrice)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UnitPrice)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ListPrice)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ListPrice)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.SupplierID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SupplierID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.InStock)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.InStock)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CategoryID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CategoryID)
+    </div>
+    
+</fieldset>
+<table width="200" border="0" cellspacing="0" cellpadding="0" align="right">
+    <tr>
+        <td colspan="4">
+            <img src="@Model.Images.First().ImageURL" />
+        </td>
+    </tr>
+    <tr>
+        @foreach (var image in Model.Images)
+        {
+            <td><img src="@image.ImageURL" width="50px" height="50px"</td> 
+        }
+        </tr>
+</table>
+<table width="100" align="right">
+    <tr>
+        <td>Quantity: <input type="number" name="quantity" min="1" max="5" style="width:80px"></td>
+    </tr>
+    <tr>
+        <td><button class="button green">
+    <div class="title">Add to cart</div>
+    <div class="price">@Html.DisplayFor(model => model.UnitPrice)
+</div>
+</button></td>
+    </tr>
+</table>
+<p>
+    @Html.ActionLink("Back to List", "Index", "Home")
+</p>

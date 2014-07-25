@@ -18,7 +18,7 @@ namespace eCommerce.Controllers
 
         public ActionResult Index()
         {
-            var categories = db.Categories.Include(c => c.Category1);
+            var categories = db.Categories.Include(c => c.ParentCategory);
             return View(categories.ToList());
         }
 

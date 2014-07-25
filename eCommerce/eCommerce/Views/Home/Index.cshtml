@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model IEnumerable<eCommerce.Models.Product>
+@{
+    ViewBag.Title = "it's simple";
 }
 @section featured {
     <section class="featured">
@@ -9,17 +10,35 @@
                 <h2>@ViewBag.Message</h2>
             </hgroup>
             <p>
-                To learn more about ASP.NET MVC visit
-                <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from ASP.NET MVC.
-                If you have any questions about ASP.NET MVC visit
-                <a href="http://forums.asp.net/1146.aspx/1?MVC" title="ASP.NET MVC Forum">our forums</a>.
+                welcome to 1337 electronics
             </p>
         </div>
     </section>
 }
 <h3>We suggest the following:</h3>
-<ol class="round">
+@foreach (var product in Model)
+{
+    <div class="product" style="display:inline-block">
+        <div>
+            @*show the first product image, if it has one*@
+            @if (product.Images.Any()) { 
+            <img src="@product.Images.First().ImageURL" />
+            }
+        </div>
+        <div>
+            <a href="@Url.Action("ByProduct", "Shop", new {id=product.ProductID})">@product.Name </a><br />
+
+            Was @product.ListPrice NOW @product.UnitPrice
+            You save @(product.ListPrice - @product.UnitPrice)
+        </div>
+
+    </div>
+}
+
+
+
+
+@*<ol class="round">
     <li class="one">
         <h5>Getting Started</h5>
         ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
@@ -42,4 +61,4 @@
         and price for your applications.
         <a href="http://go.microsoft.com/fwlink/?LinkId=245157">Learn more…</a>
     </li>
-</ol>
+</ol>*@

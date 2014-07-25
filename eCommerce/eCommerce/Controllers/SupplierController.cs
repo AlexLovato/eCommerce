@@ -4,8 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace eCommerce.Controllers
-{[Authorize()]
+namespace eCommerce.Controllers{
     public class SupplierController : Controller
     {   //make a connection to the database
         Models.eCommerceEntities db = new Models.eCommerceEntities();
@@ -23,9 +22,9 @@ namespace eCommerce.Controllers
         }
     //Suppliers: /Supplier/Create
     [HttpPost]
-    public ActionResult Create(Models.Supplier Supplier)
+    public ActionResult Create(Models.Supplier supplier)
     {
-        db.Suppliers.Add(Supplier);
+        db.Suppliers.Add(supplier);
         db.SaveChanges();
         return RedirectToAction("Index", "Supplier");
     }
@@ -61,6 +60,12 @@ namespace eCommerce.Controllers
         db.Entry(supplierToEdit).State = System.Data.EntityState.Modified;
         db.SaveChanges();
         return RedirectToAction("Index", "Supplier");
+    }
+    public ActionResult Details(int id)
+    {
+        //get the supplier from the database
+        Models.Supplier detail = db.Suppliers.Find(id);
+        return View(detail);
     }
 }
 
