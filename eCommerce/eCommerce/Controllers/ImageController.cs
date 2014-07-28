@@ -10,9 +10,10 @@ using System.IO; //add system.io to let us save or get files
 
 namespace eCommerce.Controllers
 {
-    public class ImageController : Controller
+    [Authorize(Roles = "admin")]
+    public class ImageController : BaseController
     {
-        private eCommerceEntities db = new eCommerceEntities();
+    
 
         //
         // GET: /Image/

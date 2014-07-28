@@ -6,8 +6,8 @@ using System.Web.Mvc;
 
 namespace eCommerce.Controllers
 {
-    public class HomeController : Controller
-    { Models.eCommerceEntities db = new Models.eCommerceEntities();
+    public class HomeController : BaseController
+    { 
         public ActionResult Index()
         {
             ViewBag.Message = "You can buy things from me. You will buy things from me.";

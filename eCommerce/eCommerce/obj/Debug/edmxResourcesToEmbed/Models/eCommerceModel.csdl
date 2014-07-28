@@ -26,6 +26,30 @@
       <End Role="Product" EntitySet="Products" />
       <End Role="Review" EntitySet="Reviews" />
     </AssociationSet>
+    <EntitySet Name="Addresses" EntityType="eCommerceModel.Address" />
+    <EntitySet Name="OrderLines" EntityType="eCommerceModel.OrderLine" />
+    <EntitySet Name="Orders" EntityType="eCommerceModel.Order" />
+    <EntitySet Name="Payments" EntityType="eCommerceModel.Payment" />
+    <AssociationSet Name="FK_Orders_Addresses" Association="eCommerceModel.FK_Orders_Addresses">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Addresses1" Association="eCommerceModel.FK_Orders_Addresses1">
+      <End Role="Address" EntitySet="Addresses" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderLines_Orders" Association="eCommerceModel.FK_OrderLines_Orders">
+      <End Role="Order" EntitySet="Orders" />
+      <End Role="OrderLine" EntitySet="OrderLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderLines_Products" Association="eCommerceModel.FK_OrderLines_Products">
+      <End Role="Product" EntitySet="Products" />
+      <End Role="OrderLine" EntitySet="OrderLines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Payments" Association="eCommerceModel.FK_Orders_Payments">
+      <End Role="Payment" EntitySet="Payments" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Category">
     <Key>
@@ -55,7 +79,7 @@
     <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="ListPrice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="SupplierID" Type="Int32" Nullable="false" />
     <Property Name="InStock" Type="Boolean" Nullable="false" />
@@ -64,6 +88,7 @@
     <NavigationProperty Name="Images" Relationship="eCommerceModel.FK_Images_Products1" FromRole="Product" ToRole="Image" />
     <NavigationProperty Name="Supplier" Relationship="eCommerceModel.FK_Products_Suppliers" FromRole="Product" ToRole="Supplier" />
     <NavigationProperty Name="Reviews" Relationship="eCommerceModel.FK_Reviews_Products" FromRole="Product" ToRole="Review" />
+    <NavigationProperty Name="OrderLines" Relationship="eCommerceModel.FK_OrderLines_Products" FromRole="Product" ToRole="OrderLine" />
   </EntityType>
   <EntityType Name="Review">
     <Key>
@@ -152,6 +177,131 @@
       </Principal>
       <Dependent Role="Review">
         <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Address">
+    <Key>
+      <PropertyRef Name="AddressID" />
+    </Key>
+    <Property Name="AddressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address1" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="eCommerceModel.FK_Orders_Addresses" FromRole="Address" ToRole="Order" />
+    <NavigationProperty Name="Orders1" Relationship="eCommerceModel.FK_Orders_Addresses1" FromRole="Address" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="OrderLine">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Order" Relationship="eCommerceModel.FK_OrderLines_Orders" FromRole="OrderLine" ToRole="Order" />
+    <NavigationProperty Name="Product" Relationship="eCommerceModel.FK_OrderLines_Products" FromRole="OrderLine" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Total" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BillingAddressID" Type="Int32" />
+    <Property Name="ShippingAddressID" Type="Int32" />
+    <Property Name="PaymentID" Type="Int32" />
+    <Property Name="Tax" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="ShippingTotal" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DateCompleted" Type="DateTime" Precision="3" />
+    <Property Name="DateShipped" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="BillingAddress" Relationship="eCommerceModel.FK_Orders_Addresses" FromRole="Order" ToRole="Address" />
+    <NavigationProperty Name="ShippingAddress" Relationship="eCommerceModel.FK_Orders_Addresses1" FromRole="Order" ToRole="Address" />
+    <NavigationProperty Name="OrderLines" Relationship="eCommerceModel.FK_OrderLines_Orders" FromRole="Order" ToRole="OrderLine" />
+    <NavigationProperty Name="Payment" Relationship="eCommerceModel.FK_Orders_Payments" FromRole="Order" ToRole="Payment" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="PaymentID" />
+    </Key>
+    <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CCNum" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+    <Property Name="CVV" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="ExpiryMonth" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="ExpiryYear" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="TransactionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="eCommerceModel.FK_Orders_Payments" FromRole="Payment" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK_Orders_Addresses">
+    <End Type="eCommerceModel.Address" Role="Address" Multiplicity="0..1" />
+    <End Type="eCommerceModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="BillingAddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Addresses1">
+    <End Type="eCommerceModel.Address" Role="Address" Multiplicity="0..1" />
+    <End Type="eCommerceModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Address">
+        <PropertyRef Name="AddressID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="ShippingAddressID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderLines_Orders">
+    <End Type="eCommerceModel.Order" Role="Order" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="eCommerceModel.OrderLine" Role="OrderLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderLine">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderLines_Products">
+    <End Type="eCommerceModel.Product" Role="Product" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="eCommerceModel.OrderLine" Role="OrderLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="OrderLine">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Payments">
+    <End Type="eCommerceModel.Payment" Role="Payment" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="eCommerceModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Payment">
+        <PropertyRef Name="PaymentID" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="PaymentID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

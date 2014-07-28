@@ -10,12 +10,13 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using eCommerce.Filters;
 using eCommerce.Models;
+using System.Web.Security;
 
 namespace eCommerce.Controllers
 {
     [Authorize]
     [InitializeSimpleMembership]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         //
         // GET: /Account/Login
@@ -403,5 +404,14 @@ namespace eCommerce.Controllers
             }
         }
         #endregion
+        [AllowAnonymous]
+        public ActionResult temp()
+        {
+            //create a new admin account
+            WebSecurity.CreateUserAndAccount("admin", "admin1");
+            Roles.CreateRole("admin");
+            Roles.AddUserToRole("admin", "admin");
+            return Content("OKAYYYYYYYYY");
+        }
     }
 }

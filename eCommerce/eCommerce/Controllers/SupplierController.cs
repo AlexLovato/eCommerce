@@ -5,9 +5,10 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace eCommerce.Controllers{
-    public class SupplierController : Controller
+    [Authorize(Roles = "admin")]
+    public class SupplierController : BaseController
     {   //make a connection to the database
-        Models.eCommerceEntities db = new Models.eCommerceEntities();
+       //its made in the base controller
         //
         // GET: /Supplier/
 

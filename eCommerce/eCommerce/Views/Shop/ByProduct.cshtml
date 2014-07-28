@@ -55,15 +55,25 @@
 <table width="200" border="0" cellspacing="0" cellpadding="0" align="right">
     <tr>
         <td colspan="4">
-            <img src="@Model.Images.First().ImageURL" />
+            <a href="www.google.com" class="mainimage zoom">
+                <img src="@Model.Images.First().ImageURL" />
+            </a>
         </td>
     </tr>
-    <tr>
-        @foreach (var image in Model.Images)
-        {
-            <td><img src="@image.ImageURL" width="50px" height="50px"</td> 
-        }
+   
+        <tr>
+            @foreach (var image in Model.Images)
+            {
+                <td class="thumbnails">
+                    <a href="http://www.google.com" class="zoom">
+                        <img src="@image.ImageURL" width="50px" height="50px">
+                        </a>
+</td>
+
+
+            }
         </tr>
+
 </table>
 <table width="100" align="right">
     <tr>

@@ -8,10 +8,11 @@ using System.Web.Mvc;
 using eCommerce.Models;
 
 namespace eCommerce.Controllers
-{
-    public class CategoryController : Controller
+{//limit access only to admin user
+    [Authorize(Roles="admin")]
+    public class CategoryController : BaseController
     {
-        private eCommerceEntities db = new eCommerceEntities();
+      
 
         //
         // GET: /Category/
